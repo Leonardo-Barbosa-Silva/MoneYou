@@ -24,7 +24,7 @@ const data = [
   },
 ];
 
-function getCapitalTransactionType(value: number) {
+function getCapitalTransactionTypeResult(value: number) {
   if (value > 0) {
     return "income";
   } else {
@@ -49,7 +49,7 @@ export default function Transactions() {
                   <td>{item.target}</td>
                   <td>
                     <PriceHighLight
-                      $variant={getCapitalTransactionType(item.value)}
+                      $variant={getCapitalTransactionTypeResult(item.value)}
                     >
                       {item.value.toLocaleString("pt-BR", {
                         style: "currency",

@@ -55,6 +55,14 @@
       "transactionType": "outcome",
       "value": 10,
       "createdAt": "2024-03-12T20:17:11.528Z"
+    },
+    {
+      "id": "2f31",
+      "description": "Teste",
+      "category": "Teste",
+      "transactionType": "outcome",
+      "value": -500,
+      "createdAt": "2024-03-12T22:36:21.090Z"
     }
   ]
 }

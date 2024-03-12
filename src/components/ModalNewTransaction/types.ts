@@ -11,7 +11,7 @@ export const newTransactionFormSchema = z
     ...props,
     value:
       (props.transactionType === "income" && props.value < 0) ||
-      (props.transactionType === "income" && props.value > 0)
+      (props.transactionType === "outcome" && props.value > 0)
         ? -props.value
         : props.value,
   }));

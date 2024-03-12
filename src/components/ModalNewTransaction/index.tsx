@@ -26,11 +26,11 @@ export function ModalNewTransaction() {
           <input type="text" placeholder="Categoria" required />
 
           <TransactionType>
-            <TransactionTypeButton $variant="income" value="income">
+            <TransactionTypeButton $transactionType="income" value="income">
               <ArrowCircleUp size={25} /> Entrada
             </TransactionTypeButton>
 
-            <TransactionTypeButton $variant="outcome" value="outcome">
+            <TransactionTypeButton $transactionType="outcome" value="outcome">
               <ArrowCircleDown size={25} /> Saída
             </TransactionTypeButton>
           </TransactionType>

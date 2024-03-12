@@ -1,41 +1,29 @@
 import { ArrowCircleDown, ArrowCircleUp, CurrencyDollar } from "phosphor-react";
 import { SummaryCard, SummaryContainer } from "./styles";
-
-const data = {
-  entry: 17500,
-  out: 1259,
-  total: (entry: number, out: number) => entry + out,
-};
+import { valueFormatter } from "../../utils/formatter";
+import { useSummary } from "../../hooks/summary";
 
 export function Summary() {
+  const summaryData = useSummary();
+
   return (
     <SummaryContainer>
-      <SummaryCard>
+      <SummaryCard $transactionType="income">
         <header>
           <span>Entradas</span>
-          <ArrowCircleUp size={32} color="#00b37e"/>
+          <ArrowCircleUp size={32} />
         </header>
 
-        <strong>
-          {data.entry.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </strong>
+        <strong>{valueFormatter.format(summaryData.income)}</strong>
       </SummaryCard>
 
-      <SummaryCard>
+      <SummaryCard $transactionType="outcome">
         <header>
           <span>Saídas</span>
-          <ArrowCircleDown size={32} color="#f75a68"/>
+          <ArrowCircleDown size={32} />
         </header>
 
-        <strong>
-          {data.entry.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </strong>
+        <strong>{valueFormatter.format(summaryData.outcome)}</strong>
       </SummaryCard>
 
       <SummaryCard $variant="green">
@@ -44,12 +32,7 @@ export function Summary() {
           <CurrencyDollar size={32} color="#fff" />
         </header>
 
-        <strong>
-          {data.entry.toLocaleString("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </strong>
+        <strong>{valueFormatter.format(summaryData.total)}</strong>
       </SummaryCard>
     </SummaryContainer>
   );

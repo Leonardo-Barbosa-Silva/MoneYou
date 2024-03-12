@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { Header } from "../../components/Header";
 import { SearchForm } from "../../components/SearchForm";
 import { Summary } from "../../components/Summary";
@@ -6,33 +8,11 @@ import {
   TransactionsContainer,
   TransactionsTable,
 } from "./styles";
-
-const data = [
-  {
-    id: 0,
-    target: "Desenvolvimento de site",
-    value: 12000,
-    service: "Venda",
-    date: "29/10/2023",
-  },
-  {
-    id: 1,
-    target: "Hamburguer",
-    value: -12000,
-    service: "Alimentação",
-    date: "05/04/2024",
-  },
-];
-
-function getCapitalTransactionTypeResult(value: number) {
-  if (value > 0) {
-    return "income";
-  } else {
-    return "outcome";
-  }
-}
+import { dateFormatter, valueFormatter } from "../../utils/formatter";
 
 export default function Transactions() {
+  const { transactions } = useContext(TransactionsContext);
+
   return (
     <div>
       <Header />
@@ -44,21 +24,16 @@ export default function Transactions() {
         <TransactionsContainer>
           <TransactionsTable>
             <tbody>
-              {data.map((item) => (
+              {transactions.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.target}</td>
+                  <td>{item.description}</td>
                   <td>
-                    <PriceHighLight
-                      $variant={getCapitalTransactionTypeResult(item.value)}
-                    >
-                      {item.value.toLocaleString("pt-BR", {
-                        style: "currency",
-                        currency: "BRL",
-                      })}
+                    <PriceHighLight $transactionType={item.transactionType}>
+                      {valueFormatter.format(item.value)}
                     </PriceHighLight>
                   </td>
-                  <td>{item.service}</td>
-                  <td>{item.date}</td>
+                  <td>{item.category}</td>
+                  <td>{dateFormatter.format(new Date(item.createdAt))}</td>
                 </tr>
               ))}
             </tbody>

@@ -13,6 +13,7 @@ export const SummaryContainer = styled.section`
 
 interface SummaryCardProps {
   $variant?: "gray" | "green" | "red";
+  $transactionType?: "income" | "outcome";
 }
 
 export const SummaryCard = styled.div<SummaryCardProps>`
@@ -24,6 +25,19 @@ export const SummaryCard = styled.div<SummaryCardProps>`
     display: flex;
     justify-content: space-between;
     color: ${(props) => props.theme["gray-300"]};
+
+    svg {
+      color: ${props => {
+        switch(props.$transactionType) {
+          case 'income':
+            return css`${props.theme['green-300']}`
+          case 'outcome':
+            return css`${props.theme['red-300']}`
+          default:
+            return css`${props.theme.white}`
+        }
+      }}
+    }
   }
 
   strong {

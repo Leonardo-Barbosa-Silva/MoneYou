@@ -9,8 +9,17 @@ export interface TransactionProps {
   createdAt: string;
 }
 
+export interface PostTransactionProps {
+  description: string;
+  transactionType: "income" | "outcome";
+  category: string;
+  value: number;
+}
+
 export interface TransactionsContextProps {
   transactions: TransactionProps[];
+  getTransactions: (query?: string) => void;
+  postTransaction: (data: PostTransactionProps) => void;
 }
 
 export interface TransactionsProviderProps {

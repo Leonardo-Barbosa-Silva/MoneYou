@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   PostTransactionProps,
   TransactionProps,
@@ -6,6 +6,7 @@ import {
   TransactionsProviderProps,
 } from "./types";
 import { serverAPI } from "../../api/axios";
+import { createContext } from "use-context-selector";
 
 export const TransactionsContext = createContext(
   {} as TransactionsContextProps
@@ -14,7 +15,8 @@ export const TransactionsContext = createContext(
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
-  async function getTransactions(query?: string) {
+  // Agora só irá ser re-renderizado (e os seus filhos dependentes) se sua dependência mudar e não se seus pais mudarem!
+  const getTransactions = useCallback(async (query?: string) => {
     const response: TransactionProps[] = await (
       await serverAPI.get("/transactions", {
         params: {
@@ -28,15 +30,15 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
         Object.values(transaction).some((value) =>
           value.toString().toLowerCase().match(query.toLocaleLowerCase())
         )
-      )
+      );
 
       setTransactions(data);
     } else {
       setTransactions(response);
     }
-  }
+  }, [])
 
-  async function postTransaction(data: PostTransactionProps) {
+  const postTransaction = useCallback(async (data: PostTransactionProps) => {
     const { description, category, transactionType, value } = data;
 
     const newTransaction = (
@@ -50,14 +52,15 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     ).data;
 
     setTransactions((prevState) => [newTransaction, ...prevState]);
-  }
+  }, []);
 
-  async function deleteTransaction(id: number) {
-    console.log(id)
-    await serverAPI.delete(`/transactions/${id}`)
+  const deleteTransaction = useCallback(async (id: number) => {
+    await serverAPI.delete(`/transactions/${id}`);
 
-    setTransactions(prevState => prevState.filter(transaction => transaction.id != id))
-  }
+    setTransactions((prevState) =>
+      prevState.filter((transaction) => transaction.id != id)
+    );
+  }, []);
 
   useEffect(() => {
     getTransactions();
@@ -65,7 +68,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, getTransactions, postTransaction, deleteTransaction }}
+      value={{
+        transactions,
+        getTransactions,
+        postTransaction,
+        deleteTransaction,
+      }}
     >
       {children}
     </TransactionsContext.Provider>

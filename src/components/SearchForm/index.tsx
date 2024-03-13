@@ -3,11 +3,16 @@ import { SearchFormContainer } from "./styles";
 import { useForm } from "react-hook-form";
 import { SearchFormInputsTypes, searchFormSchema } from "./types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
+import { useContextSelector } from "use-context-selector";
+import { memo } from "react";
 
-export function SearchForm() {
-  const { getTransactions } = useContext(TransactionsContext)
+function SearchFormComponent() {
+  // Agora consome somente uma função do contexto, re-renderizando somente se este mudar e não se os outros mudarem
+  const getTransactions = useContextSelector(
+    TransactionsContext,
+    (context) => context.getTransactions
+  );
 
   const {
     register,
@@ -19,7 +24,7 @@ export function SearchForm() {
   });
 
   async function handleSearchFormSubmit(data: SearchFormInputsTypes) {
-    await getTransactions(data.search)
+    await getTransactions(data.search);
   }
 
   return (
@@ -37,3 +42,7 @@ export function SearchForm() {
     </SearchFormContainer>
   );
 }
+
+
+// Agora só vai ser re-renderizado caso seu estado interno ou suas props mudarem e não se seus pais mudarem
+export const SearchForm = memo(SearchFormComponent)

@@ -1,5 +1,10 @@
+import Transactions from "./pages/Transactions";
+import { TransactionsProvider } from "./contexts/TransactionsContext";
+
 export function App() {
   return (
-    <h1>Hello World!</h1>
+    <TransactionsProvider>
+      <Transactions />
+    </TransactionsProvider>
   )
 }

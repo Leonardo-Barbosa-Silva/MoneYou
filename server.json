@@ -1,68 +1,36 @@
 {
   "transactions": [
     {
-      "id": "1",
-      "description": "Desenvolvimento de site",
-      "transactionType": "income",
-      "category": "Venda",
-      "value": 1400,
-      "createdAt": "2024-03-11T13:36:40.933Z"
-    },
-    {
-      "id": "2",
-      "description": "Hamburguer (Combo)",
-      "transactionType": "outcome",
-      "category": "Alimentação",
-      "value": -65,
-      "createdAt": "2024-01-11T10:20:40.933Z"
-    },
-    {
-      "id": "3",
+      "id": "b346",
       "description": "Curso Rocketseat",
-      "transactionType": "outcome",
       "category": "Educação",
+      "transactionType": "outcome",
       "value": -1999,
-      "createdAt": "2024-03-09T23:20:40.933Z"
+      "createdAt": "2024-03-13T02:38:08.309Z"
     },
     {
-      "id": "4",
-      "description": "Relógio",
-      "transactionType": "outcome",
-      "category": "Assessórios",
-      "value": -66,
-      "createdAt": "2024-02-29T19:20:40.933Z"
-    },
-    {
-      "id": "5",
-      "description": "Desenvolvimento de site e backend",
-      "transactionType": "income",
-      "category": "Venda",
-      "value": 4500,
-      "createdAt": "2024-08-29T09:20:40.933Z"
-    },
-    {
-      "id": "e10d",
-      "description": "Teste",
+      "id": "fab3",
+      "description": "Aveia em Flocos",
       "category": "Alimentação",
+      "transactionType": "outcome",
+      "value": -17,
+      "createdAt": "2024-03-13T02:39:04.450Z"
+    },
+    {
+      "id": "f9e4",
+      "description": "Salário (Março)",
+      "category": "Trabalho",
       "transactionType": "income",
-      "value": -30,
-      "createdAt": "2024-03-12T20:03:27.660Z"
+      "value": 2100,
+      "createdAt": "2024-03-13T02:39:26.863Z"
     },
     {
-      "id": "2b4e",
-      "description": "Teste",
-      "category": "Teste",
-      "transactionType": "outcome",
-      "value": 10,
-      "createdAt": "2024-03-12T20:17:11.528Z"
-    },
-    {
-      "id": "2f31",
-      "description": "Teste",
-      "category": "Teste",
-      "transactionType": "outcome",
-      "value": -500,
-      "createdAt": "2024-03-12T22:36:21.090Z"
+      "id": "de2e",
+      "description": "Desenvolvimento de Site",
+      "category": "Trabalho",
+      "transactionType": "income",
+      "value": 2300,
+      "createdAt": "2024-03-13T02:39:55.275Z"
     }
   ]
 }

@@ -20,6 +20,7 @@ export interface TransactionsContextProps {
   transactions: TransactionProps[];
   getTransactions: (query?: string) => void;
   postTransaction: (data: PostTransactionProps) => void;
+  deleteTransaction: (id: number) => void;
 }
 
 export interface TransactionsProviderProps {

@@ -9,9 +9,14 @@ import {
   TransactionsTable,
 } from "./styles";
 import { dateFormatter, valueFormatter } from "../../utils/formatter";
+import { TrashSimple } from "phosphor-react";
 
 export default function Transactions() {
-  const { transactions } = useContext(TransactionsContext);
+  const { transactions, deleteTransaction } = useContext(TransactionsContext);
+
+  async function handleDeleteTransaction(id: number) {
+    await deleteTransaction(id)
+  }
 
   return (
     <div>
@@ -34,6 +39,11 @@ export default function Transactions() {
                   </td>
                   <td>{item.category}</td>
                   <td>{dateFormatter.format(new Date(item.createdAt))}</td>
+                  <td>
+                    <button type="button" onClick={() => handleDeleteTransaction(item.id)}>
+                      <TrashSimple size={30}/>
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>

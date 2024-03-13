@@ -52,13 +52,20 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
     setTransactions((prevState) => [newTransaction, ...prevState]);
   }
 
+  async function deleteTransaction(id: number) {
+    console.log(id)
+    await serverAPI.delete(`/transactions/${id}`)
+
+    setTransactions(prevState => prevState.filter(transaction => transaction.id != id))
+  }
+
   useEffect(() => {
     getTransactions();
   }, []);
 
   return (
     <TransactionsContext.Provider
-      value={{ transactions, getTransactions, postTransaction }}
+      value={{ transactions, getTransactions, postTransaction, deleteTransaction }}
     >
       {children}
     </TransactionsContext.Provider>

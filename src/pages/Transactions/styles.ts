@@ -13,8 +13,15 @@ export const TransactionsTable = styled.table`
   border-spacing: 0 0.5rem;
 
   td {
-    padding: 1.25rem 2rem;
     background: ${(props) => props.theme["gray-700"]};
+    padding: 1.25rem 2rem;
+
+    button {
+      background: transparent;
+      border: 0;
+      line-height: 0;
+      cursor: pointer;
+    }
 
     &:first-child {
       border-radius: 6px 0 0 6px;
@@ -23,10 +30,17 @@ export const TransactionsTable = styled.table`
 
     &:last-child {
       border-radius: 0 6px 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover button {
+        color: ${(props) => props.theme["red-300"]};
+      }
     }
   }
 `;
-
 
 interface PriceHighLightProps {
   $transactionType: "income" | "outcome";

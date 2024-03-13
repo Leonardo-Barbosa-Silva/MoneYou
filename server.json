@@ -1,36 +1,28 @@
 {
   "transactions": [
     {
-      "id": "b346",
+      "id": "212a",
       "description": "Curso Rocketseat",
       "category": "Educação",
       "transactionType": "outcome",
       "value": -1999,
-      "createdAt": "2024-03-13T02:38:08.309Z"
+      "createdAt": "2024-03-13T14:08:25.817Z"
     },
     {
-      "id": "fab3",
-      "description": "Aveia em Flocos",
+      "id": "68c7",
+      "description": "Mercado",
       "category": "Alimentação",
       "transactionType": "outcome",
-      "value": -17,
-      "createdAt": "2024-03-13T02:39:04.450Z"
+      "value": -84,
+      "createdAt": "2024-03-13T14:08:39.731Z"
     },
     {
-      "id": "f9e4",
+      "id": "0029",
       "description": "Salário (Março)",
       "category": "Trabalho",
       "transactionType": "income",
       "value": 2100,
-      "createdAt": "2024-03-13T02:39:26.863Z"
-    },
-    {
-      "id": "de2e",
-      "description": "Desenvolvimento de Site",
-      "category": "Trabalho",
-      "transactionType": "income",
-      "value": 2300,
-      "createdAt": "2024-03-13T02:39:55.275Z"
+      "createdAt": "2024-03-13T14:09:00.735Z"
     }
   ]
 }

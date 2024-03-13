@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
 import { Header } from "../../components/Header";
 import { SearchForm } from "../../components/SearchForm";
@@ -10,12 +9,19 @@ import {
 } from "./styles";
 import { dateFormatter, valueFormatter } from "../../utils/formatter";
 import { TrashSimple } from "phosphor-react";
+import { useContextSelector } from "use-context-selector";
 
 export default function Transactions() {
-  const { transactions, deleteTransaction } = useContext(TransactionsContext);
+  const { transactions, deleteTransaction } = useContextSelector(
+    TransactionsContext,
+    (context) => ({
+      transactions: context.transactions,
+      deleteTransaction: context.deleteTransaction,
+    })
+  )
 
   async function handleDeleteTransaction(id: number) {
-    await deleteTransaction(id)
+    await deleteTransaction(id);
   }
 
   return (
@@ -40,8 +46,11 @@ export default function Transactions() {
                   <td>{item.category}</td>
                   <td>{dateFormatter.format(new Date(item.createdAt))}</td>
                   <td>
-                    <button type="button" onClick={() => handleDeleteTransaction(item.id)}>
-                      <TrashSimple size={30}/>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteTransaction(item.id)}
+                    >
+                      <TrashSimple size={30} />
                     </button>
                   </td>
                 </tr>

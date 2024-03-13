@@ -13,8 +13,8 @@ import {
   newTransactionFormSchema,
 } from "./types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useContext } from "react";
 import { TransactionsContext } from "../../contexts/TransactionsContext";
+import { useContextSelector } from "use-context-selector";
 
 export function ModalNewTransaction() {
   const {
@@ -31,7 +31,9 @@ export function ModalNewTransaction() {
     },
   });
 
-  const { postTransaction } = useContext(TransactionsContext);
+  const postTransaction = useContextSelector(TransactionsContext, context => {
+    return context.postTransaction
+  });
 
   async function handleNewTransactionFormSubmit(
     data: NewTransactionFormInputsTypes

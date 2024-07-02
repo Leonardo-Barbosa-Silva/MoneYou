@@ -1,20 +1,20 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
+import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
+import { Controller, useForm } from "react-hook-form";
+import { useContextSelector } from "use-context-selector";
+import { TransactionsContext } from "../../contexts/TransactionsContext";
 import {
   CloseButton,
   Content,
   Overlay,
-  TransactionTypeButtonsContainer,
   TransactionTypeButton,
+  TransactionTypeButtonsContainer,
 } from "./styles";
-import { ArrowCircleDown, ArrowCircleUp, X } from "phosphor-react";
-import { Controller, useForm } from "react-hook-form";
 import {
   NewTransactionFormInputsTypes,
   newTransactionFormSchema,
 } from "./types";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TransactionsContext } from "../../contexts/TransactionsContext";
-import { useContextSelector } from "use-context-selector";
 
 export function ModalNewTransaction() {
   const {
@@ -32,7 +32,7 @@ export function ModalNewTransaction() {
   });
 
   const postTransaction = useContextSelector(TransactionsContext, context => {
-    return context.postTransaction
+    return context.postTransaction;
   });
 
   async function handleNewTransactionFormSubmit(
@@ -40,7 +40,7 @@ export function ModalNewTransaction() {
   ) {
     const { description, category, transactionType, value } = data;
 
-    await postTransaction({
+    postTransaction({
       description,
       category,
       transactionType,

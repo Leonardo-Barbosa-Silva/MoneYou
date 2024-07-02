@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
+import { createContext } from "use-context-selector";
 import {
   PostTransactionProps,
   TransactionProps,
   TransactionsContextProps,
   TransactionsProviderProps,
 } from "./types";
-import { serverAPI } from "../../api/axios";
-import { createContext } from "use-context-selector";
 
 export const TransactionsContext = createContext(
   {} as TransactionsContextProps
@@ -15,55 +14,50 @@ export const TransactionsContext = createContext(
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
 
-  // Agora só irá ser re-renderizado (e os seus filhos dependentes) se sua dependência mudar e não se seus pais mudarem!
-  const getTransactions = useCallback(async (query?: string) => {
-    const response: TransactionProps[] = await (
-      await serverAPI.get("/transactions", {
-        params: {
-          _sort: "-createdAt",
-        },
-      })
-    ).data;
+  const loadTransactions = () => {
+    const savedTransactions = localStorage.getItem('transactions');
+    if (savedTransactions) {
+      setTransactions(JSON.parse(savedTransactions));
+    }
+  };
 
+  const saveTransactions = (newTransactions: TransactionProps[]) => {
+    setTransactions(newTransactions);
+    localStorage.setItem('transactions', JSON.stringify(newTransactions));
+  };
+
+  const getTransactions = useCallback((query?: string) => {
+    loadTransactions();
     if (query) {
-      const data: TransactionProps[] = response.filter((transaction) =>
+      const filteredTransactions = transactions.filter((transaction) =>
         Object.values(transaction).some((value) =>
-          value.toString().toLowerCase().match(query.toLocaleLowerCase())
+          value.toString().toLowerCase().includes(query.toLowerCase())
         )
       );
-
-      setTransactions(data);
+      setTransactions(filteredTransactions);
     } else {
-      setTransactions(response);
+      loadTransactions();
     }
-  }, [])
+  }, [transactions]);
 
-  const postTransaction = useCallback(async (data: PostTransactionProps) => {
-    const { description, category, transactionType, value } = data;
+  const postTransaction = useCallback((data: PostTransactionProps) => {
+    const newTransaction = {
+      ...data,
+      id: Date.now(),
+      createdAt: new Date(),
+    };
+    const updatedTransactions = [newTransaction, ...transactions];
+    
+    saveTransactions(updatedTransactions);
+  }, [transactions]);
 
-    const newTransaction = (
-      await serverAPI.post("/transactions", {
-        description,
-        category,
-        transactionType,
-        value,
-        createdAt: new Date(),
-      })
-    ).data;
-
-    setTransactions((prevState) => [newTransaction, ...prevState]);
-  }, []);
-
-  const deleteTransaction = useCallback(async (id: number) => {
-    await serverAPI.delete(`/transactions/${id}`);
-
-    setTransactions((prevState) =>
-      prevState.filter((transaction) => transaction.id != id)
-    );
-  }, []);
+  const deleteTransaction = useCallback((id: number) => {
+    const updatedTransactions = transactions.filter((transaction) => transaction.id !== id);
+    saveTransactions(updatedTransactions);
+  }, [transactions]);
 
   useEffect(() => {
-    getTransactions();
+    loadTransactions();
   }, []);
 
   return (

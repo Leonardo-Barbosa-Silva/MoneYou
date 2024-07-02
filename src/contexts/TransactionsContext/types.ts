@@ -6,7 +6,7 @@ export interface TransactionProps {
   transactionType: "income" | "outcome";
   category: string;
   value: number;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export interface PostTransactionProps {
